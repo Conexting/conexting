@@ -3,7 +3,7 @@ Conexting OS
 
 Conexting social wall engine.
 
-Documentation to be added later. For now check out conexting.org.
+Documentation to be added later.
 
 ToDo before first alpha-release:
 - Rework Admin-pages
