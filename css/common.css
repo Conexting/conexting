@@ -1,0 +1,22 @@
+body .btn-toolbar {
+  text-align: center;
+}
+body .btn-toolbar .btn-info {
+  color: #447213;
+  text-shadow: nowrap;
+}
+body .example {
+  font-size: 1.3em;
+  white-space: pre;
+}
+body table {
+  background-color: rgba(255, 255, 255, 0.6);
+}
+body table th .muted {
+  font-weight: normal;
+  color: #444;
+}
+body .grid-view {
+  padding-top: 0;
+}
+/*# sourceMappingURL=common.css.map */

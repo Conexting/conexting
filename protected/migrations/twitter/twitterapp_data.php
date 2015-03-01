@@ -1,0 +1,19 @@
+<?php
+return array(
+	array(
+		'appid'=>Yii::app()->params['cnxConfig']['twitter']['messageApp']['id'],
+		'name'=>Yii::app()->params['cnxConfig']['twitter']['messageApp']['name'],
+		'oauth_token'=>Yii::app()->params['cnxConfig']['twitter']['messageApp']['token'],
+		'oauth_token_secret'=>Yii::app()->params['cnxConfig']['twitter']['messageApp']['tokenSecret'],
+		'oauth_consumer_key'=>Yii::app()->params['cnxConfig']['twitter']['messageApp']['consumerKey'],
+		'oauth_consumer_secret'=>Yii::app()->params['cnxConfig']['twitter']['messageApp']['consumerSecret'],
+	),
+	array(
+		'appid'=>Yii::app()->params['cnxConfig']['twitter']['loginApp']['id'],
+		'name'=>Yii::app()->params['cnxConfig']['twitter']['loginApp']['name'],
+		'oauth_token'=>Yii::app()->params['cnxConfig']['twitter']['loginApp']['token'],
+		'oauth_token_secret'=>Yii::app()->params['cnxConfig']['twitter']['loginApp']['tokenSecret'],
+		'oauth_consumer_key'=>Yii::app()->params['cnxConfig']['twitter']['loginApp']['consumerKey'],
+		'oauth_consumer_secret'=>Yii::app()->params['cnxConfig']['twitter']['loginApp']['consumerSecret'],
+	),
+);

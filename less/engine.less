@@ -1,0 +1,75 @@
+// Engine styling (doesn't effect walls)
+
+body {
+	@media screen and (min-width: 768px) {
+		#container {
+			padding-top: 10px;
+		}
+	}
+	
+	@media screen and (max-width: 767px) {
+		.header .nav {
+			margin-bottom: 0.5em;
+		}
+	}
+	
+	table.table tfoot td {
+		border-top: 2px solid #DDDDDD;
+		font-weight: bold;
+	}
+	
+	table.table tbody td.deleted {
+		text-decoration: line-through;
+	}
+
+	h1.title {
+		text-align: right;
+		margin-bottom: 0;
+		@media screen and (max-width: 1199px) {
+			line-height: 0;
+		}
+		small {
+			font-size: 15px;
+			vertical-align: text-bottom;
+		}
+		img {
+			float: left;
+		}
+	}
+
+	h1, h2, h3 {
+		line-height: 1.1em;
+	}
+
+	h1 {
+		text-align: center;
+		margin-bottom: 20px;
+		font-size: 34px;
+	}
+
+	h2 {
+		font-size: 24px;
+	}
+
+	h3 {
+		font-size: 16px;
+		margin-bottom: 2px;
+	}
+	
+	.share-button {
+		text-align: center;
+	}
+	
+	form #Wall_TwitterUser button.sign-in {
+		border: 0;
+		box-shadow: 0;
+		padding: 0;
+		margin: 0;
+		background: 0;
+	}
+	
+	.icon-small {
+		font-size: 0.8em;
+		vertical-align: top;
+	}
+}

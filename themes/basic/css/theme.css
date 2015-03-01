@@ -1,0 +1,19 @@
+body #container {
+  padding-top: 7px;
+}
+body .header .engine-nav {
+  opacity: 0.7;
+  margin-bottom: 0;
+}
+@media screen and (max-width: 979px) {
+  body {
+    background-position: 50% 0;
+    padding-top: 0;
+  }
+}
+@media screen and (min-width: 768px) {
+  body #container {
+    min-height: 485px;
+  }
+}
+/*# sourceMappingURL=theme.css.map */

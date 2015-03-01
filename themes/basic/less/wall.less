@@ -1,0 +1,53 @@
+// Theme for wall with wall variables
+
+body {
+	background-image: url('/images/bg/@{backgroundImage}.png');
+	background-repeat: no-repeat;
+	
+	h1 {
+		color: @titleColor;
+	}
+	h2 {
+		color: desaturate(@titleColor,50);
+	}
+
+	.feed {
+		.parent {
+			background-color: @messageBackgroundColor;
+			color: @messageTextColor;
+
+			.message-content a:link, .message-content a:visited {
+				color: @messageLinkColor;
+			}
+
+			.sender, .sender a, .sender a:link, .sender a:visited {
+				color: contrast(@messageTextColor,darken(@messageTextColor,25),lighten(@messageTextColor,25));
+			}
+		}
+		
+		.adminmessage {
+			background-color: contrast(@messageBackgroundColor,darken(@messageBackgroundColor,20),lighten(@messageBackgroundColor,40));
+			.sender, .sender a, .sender a:link, .sender a:visited {
+				color: #3A87AD;
+			}
+		}
+	}
+	
+	.logo {
+		margin-bottom: 0.5em;
+		text-align: @logoPosition;
+		&.span12 {
+			margin-left: 0;
+		}
+	}
+	
+	#container {
+		.logo {
+			padding-top: @logoPaddingTop;
+		}
+		.content {			
+			font-family: @font;
+			font-size: e('@{fontSize}px');
+		}
+	}
+}

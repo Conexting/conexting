@@ -1,0 +1,21 @@
+<h2><?php echo $title ?></h2>
+<?php
+$this->widget('ChatView',array(
+	'options'=>array(
+		'url'=>strtr(
+			$this->createUrl('wall/chat',array(
+				'question'=>'all',
+				'cmd'=>'commandPlaceholder',
+				'removed'=>$showRemoved
+			)),array('commandPlaceholder'=>'{cmd}')),
+		'isAdmin'=>$this->isWallAdmin(),
+		'threaded'=>(bool)$this->wall->threaded,
+		'showUserImages'=>(bool)$this->wall->themeModel->showUserImages,
+		'showTimestamps'=>(bool)$this->wall->themeModel->showTimestamps,
+		'messageCount'=>100
+	),
+	'showSearch'=>true,
+	'showMsg'=>false,
+	'showImages'=>false,
+));
+?>

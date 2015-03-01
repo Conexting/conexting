@@ -1,0 +1,5 @@
+#!/bin/bash
+cd `dirname $0`
+cd ..
+php -q yiic maintain notifyWallToBeRemoved
+php -q yiic maintain notifyWallExpirations

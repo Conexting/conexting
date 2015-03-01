@@ -1,0 +1,22 @@
+.poll .choice {
+	padding: 0.2em 0.3em;
+	margin: 0.2em;
+}
+
+.poll.allowVoting .choice {
+	border: 1px dotted #fff;
+}
+
+.poll.allowVoting .choice:hover {
+	border-color: #ccc;
+	cursor: pointer;
+}
+
+.poll .choice.selected {
+	font-weight: bold;
+	cursor: default;
+}
+
+.poll .choice .choiceCount {
+	float: right;
+}

@@ -1,0 +1,137 @@
+.feed .message, .feed .msg {
+	padding: 0 2px 0 10px;
+	margin: 4px 0;
+}
+
+.feed .message p {
+	padding: 0;
+	margin: 0;
+}
+
+.feed .parent {
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	background-color: #fff;
+	margin-bottom: 5px;
+	padding: 5px;
+}
+
+.feed .adminmessage {
+	background-color: #dfd;
+	border-radius: 4px;
+}
+
+.feed .parent.withimage {
+	min-height: 2em;
+}
+
+.feed .message img.userimage {
+	margin-right: 4px;
+	height: 2em;
+	border-radius: 4px;
+}
+
+.feed .message .message-content img {
+	display: block;
+}
+
+.feed .message.child img.userimage {
+	display: none;
+}
+
+.username {
+	font-weight: bold;
+}
+
+.sender, .sender a, .sender a:visited {
+	color: #388;
+}
+
+.feed .adminmessage .sender, .msg.adminmessage .username {
+	color: #3A87AD;
+}
+
+.message .time {
+	font-size: 0.7em;
+	color: #aaa;
+}
+
+a.command {
+	font-size: 0.7em;
+}
+
+.msg .loader, .feed .loader {
+	width: 15px;
+	height: 15px;
+	background-image: url('ajax-loader.gif');
+	float: right;
+}
+.feed .loader {
+	margin-top: 5px;
+}
+
+div.msginfo {
+	text-align: left;
+	font-weight: bold;
+}
+div.msginfo .error {
+	color: #e22;
+}
+div.msginfo .warning {
+	color: #ffdd57;
+}
+div.msginfo .info {
+	color: #2e2;
+}
+
+.msg-placeholder {
+	height: 13px;
+	border: 1px dotted #ccc;
+	background-color: #fcfcfc;
+	color: #ddd;
+	padding: 5px;
+}
+
+a.admin-icon {
+	padding: 1px 2px;
+}
+a.admin-icon.admin-delete-message,
+a.admin-icon.admin-restore-message,
+a.admin-icon.admin-pin-message,
+a.admin-icon.admin-unpin-message {
+	float: right;
+}
+a.admin-icon.admin-approve-message {
+	margin-right: 5px;
+}
+.message a.admin-icon.admin-unpin-message {
+	display: none;
+}
+.message a.admin-icon.admin-pin-message,
+.message.pinned a.admin-icon.admin-unpin-message {
+	display: inline;
+}
+.message.pinned a.admin-icon.admin-pin-message {
+	display: none;
+}
+.message.admin-hover>p {
+	border-color: #ffdd57;
+	border-width: 3px;
+	border-style: solid;
+}
+
+a.change-username {
+	font-size: 0.75em;
+	text-decoration: none;
+}
+
+.message.filteredOut {
+	display: none !important;
+}
+.message.filteredIn .message.filteredOut {
+	display: block;
+}
+
+.message.pinned {
+	border: 3px dotted #F00;
+}

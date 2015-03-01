@@ -1,0 +1,80 @@
+// Wall styling (doesn't effect engine)
+
+body {
+	.print-header {
+		display: none;
+		@media print {
+			display: block;
+			.conexLogo {
+				float: right;
+			}
+		}
+	}
+	
+	.header {
+		@media print {
+			display: none;
+		}
+		.conexLogo {
+			position: absolute;
+			right: 30px;
+			top: 5px;
+			@media screen and (max-width: 640px) {
+				opacity: 0.5;
+			}
+		}
+	}
+
+	h2 {
+		margin-top: 0.9em;
+		margin-bottom: 0.5em;
+	}
+	@media screen and (min-width: 981px) {
+		h1 {
+			font-size: 220%;
+			line-height: 115%;
+		}
+		h2 {
+			font-size: 135%;
+			line-height: 115%;
+		}
+	}
+	@media screen and (max-width: 980px) {
+		font-size: 90%;
+		h1 {
+			font-size: 140%;
+			line-height: 115%;
+		}
+		h2 {
+			font-size: 110%;
+			line-height: 115%;
+		}
+	}
+	@media screen and (max-width: 767px) {
+		font-size: 80%;
+		h1 {
+			font-size: 120%;
+			line-height: 105%;
+		}
+		h2 {
+			font-size: 110%;
+			line-height: 105%;
+		}
+	}
+	
+	.reportSelector {
+		@media print {
+			display: none;
+		}
+	}
+}
+
+.streamContainer {
+	text-align: center;
+}
+
+@media screen and (max-width: 640px) {
+	iframe.stream {
+		width: 100%;
+	}
+}

@@ -1,0 +1,51 @@
+body #container {
+  min-height: 0 !important;
+}
+body #container h1 {
+  text-align: center;
+  height: 9vh;
+  margin: 0 0 1vh 0;
+}
+body #container .chat .show-more {
+  position: absolute;
+  bottom: 0;
+  font-size: 70%;
+  color: #999;
+  margin-bottom: 0;
+}
+body #container .chat .feed {
+  height: 50vh;
+  overflow: hidden;
+  text-align: center;
+}
+body #container .chat .feed .message {
+  font-size: 0.6em;
+}
+body #container .chat .feed .message.parent:last-child {
+  margin-bottom: 50vh;
+}
+body #container .chat .pinnedFeed {
+  text-align: center;
+}
+body #container .chat .pinnedFeed .message {
+  margin-bottom: 1em;
+}
+body #container .chat .message {
+  line-height: 110%;
+  background: transparent;
+  border: none;
+}
+body #container .chat .message p {
+  display: inline-block;
+  text-align: left;
+}
+body #container .chat .message p .message-content {
+  display: block;
+  margin: 0.2em 0;
+  font-size: 1.5em;
+}
+body #container .chat .message.selected,
+body #container .chat .message.pinned {
+  font-size: 1.5em;
+}
+/*# sourceMappingURL=visualize.css.map */

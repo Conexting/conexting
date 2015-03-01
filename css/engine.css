@@ -1,0 +1,65 @@
+@media screen and (min-width: 768px) {
+  body #container {
+    padding-top: 10px;
+  }
+}
+@media screen and (max-width: 767px) {
+  body .header .nav {
+    margin-bottom: 0.5em;
+  }
+}
+body table.table tfoot td {
+  border-top: 2px solid #DDDDDD;
+  font-weight: bold;
+}
+body table.table tbody td.deleted {
+  text-decoration: line-through;
+}
+body h1.title {
+  text-align: right;
+  margin-bottom: 0;
+}
+@media screen and (max-width: 1199px) {
+  body h1.title {
+    line-height: 0;
+  }
+}
+body h1.title small {
+  font-size: 15px;
+  vertical-align: text-bottom;
+}
+body h1.title img {
+  float: left;
+}
+body h1,
+body h2,
+body h3 {
+  line-height: 1.1em;
+}
+body h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 34px;
+}
+body h2 {
+  font-size: 24px;
+}
+body h3 {
+  font-size: 16px;
+  margin-bottom: 2px;
+}
+body .share-button {
+  text-align: center;
+}
+body form #Wall_TwitterUser button.sign-in {
+  border: 0;
+  box-shadow: 0;
+  padding: 0;
+  margin: 0;
+  background: 0;
+}
+body .icon-small {
+  font-size: 0.8em;
+  vertical-align: top;
+}
+/*# sourceMappingURL=engine.css.map */

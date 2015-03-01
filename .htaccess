@@ -1,0 +1,19 @@
+Options +FollowSymLinks
+IndexIgnore */*
+RewriteEngine on
+
+RewriteRule	^/robots.txt$ - [L]
+RewriteRule	^/favicon.ico$ - [L]
+RewriteRule	^/sitemap.xml$ - [L]
+RewriteRule	^/apple-touch-icon.png$ - [L]
+RewriteRule ^/apple-touch-icon-precomposed.png$ - [L]
+
+# if a directory or a file exists, use it directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# otherwise forward it to index.php
+RewriteRule . index.php
+
+# Debug: virheilmoitukset näkyviin
+#php_flag display_errors on

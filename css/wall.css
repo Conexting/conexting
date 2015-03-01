@@ -1,0 +1,80 @@
+body .print-header {
+  display: none;
+}
+@media print {
+  body .print-header {
+    display: block;
+  }
+  body .print-header .conexLogo {
+    float: right;
+  }
+}
+@media print {
+  body .header {
+    display: none;
+  }
+}
+body .header .conexLogo {
+  position: absolute;
+  right: 30px;
+  top: 5px;
+}
+@media screen and (max-width: 640px) {
+  body .header .conexLogo {
+    opacity: 0.5;
+  }
+}
+body h2 {
+  margin-top: 0.9em;
+  margin-bottom: 0.5em;
+}
+@media screen and (min-width: 981px) {
+  body h1 {
+    font-size: 220%;
+    line-height: 115%;
+  }
+  body h2 {
+    font-size: 135%;
+    line-height: 115%;
+  }
+}
+@media screen and (max-width: 980px) {
+  body {
+    font-size: 90%;
+  }
+  body h1 {
+    font-size: 140%;
+    line-height: 115%;
+  }
+  body h2 {
+    font-size: 110%;
+    line-height: 115%;
+  }
+}
+@media screen and (max-width: 767px) {
+  body {
+    font-size: 80%;
+  }
+  body h1 {
+    font-size: 120%;
+    line-height: 105%;
+  }
+  body h2 {
+    font-size: 110%;
+    line-height: 105%;
+  }
+}
+@media print {
+  body .reportSelector {
+    display: none;
+  }
+}
+.streamContainer {
+  text-align: center;
+}
+@media screen and (max-width: 640px) {
+  iframe.stream {
+    width: 100%;
+  }
+}
+/*# sourceMappingURL=wall.css.map */
