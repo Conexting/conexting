@@ -452,4 +452,8 @@ return array(
 	'Select nickname'=>'Valitse nimimerkki',
 	'Error processing payment, please contact us for support'=>'Virhe maksun käsittelyssä, ole hyvä ja ota yhteyttä niin selvitämme asian',
 	'Your purchase is successful, but confirmation email could not be sent to your email address. Please contact us if you require confirmation of purchase.'=>'Maksusuorituksesi on vahvistettu, mutta vahvistussähköpostin lähettäminen sähköpostiosoitteeseesi epäonnistui. Ole hyvä ja ota yhteyttä mikäli tarvitset vahvistuksen maksusuorituksesta.',	
+	'Is removed'=>'Poistetaan',
+	'Published'=>'Julkaisu',
+	'Client'=>'Asiakas',
+	'SMS Credits'=>'SMS-viestejä',
 );

@@ -53,8 +53,9 @@ class Wall extends DeletableActiveRecord {
 			array('name','validateIf','compare'=>'isPublished','validator'=>'unsafe','setInvalidToNull'=>false), // Name cannot be changed after wall has been published
 			
 			// Only for admin
-			array('premium,paid,hidden','boolean','on'=>'admin'),
-			array('expirationTime,dyingTime','safe','on'=>'admin'),
+			array('premium,hidden','boolean','on'=>'admin'),
+			array('publishingTime,expirationTime,dyingTime','safe','on'=>'admin'),
+			array('smscredit','numerical','min'=>0,'integerOnly'=>true,'on'=>'admin'),
 		);
 	}
 	
@@ -145,9 +146,13 @@ class Wall extends DeletableActiveRecord {
 			'expires'=>g('Use time expires'),
 			'dies'=>g('Visible until'),
 			'expirationTime'=>g('Use time expires'),
+			'publishingTime'=>g('Published'),
+			'dyingTime'=>g('Is removed'),
 			'TwitterUser'=>g('Twitter account'),
 			'premoderated'=>g('Pre-moderate messages'),
 			'threaded'=>g('Threaded convesation'),
+			'clientid'=>g('Client'),
+			'smscredit'=>g('SMS Credits'),
 		);
 	}
 	
@@ -175,11 +180,21 @@ class Wall extends DeletableActiveRecord {
 			return null;
 		}
 	}
+	public function getPublishingTime($format='j.n.Y H:i') {
+		if( $this->published ) {
+			return date($format,$this->published);
+		} else {
+			return null;
+		}
+	}
 	public function getCreationDate() {
 		return $this->getCreationTime('j.n.Y');
 	}
 	public function getModificationDate() {
 		return $this->getModificationTime('j.n.Y');
+	}
+	public function getPublishingDate() {
+		return $this->getPublishingTime('j.n.Y');
 	}
 	public function getExpirationDate() {
 		return $this->getExpirationTime('j.n.Y');
@@ -197,6 +212,12 @@ class Wall extends DeletableActiveRecord {
 		$date = strtotime($value);
 		if( $date ) {
 			$this->dies = $date;
+		}
+	}
+	public function setPublishingTime($value) {
+		$date = strtotime($value);
+		if( $date ) {
+			$this->published = $date;
 		}
 	}
 	
@@ -256,7 +277,7 @@ class Wall extends DeletableActiveRecord {
 	}
 	
 	public function getIsPublished() {
-		return !is_null($this->published);
+		return !is_null($this->published) && $this->published < time();
 	}
 	
 	public function getThemeModel() {

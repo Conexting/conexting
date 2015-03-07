@@ -34,7 +34,7 @@ echo $form->errorSummary($wall);
 <fieldset>
 	<legend><?php t('Passwords'); ?></legend>
 	<?php echo $form->textFieldRow($wall,'adminpassword',array('hint'=>g('Wall admin can remove messages, add questions and polls, view reports etc using this password'))); ?>
-	<?php echo CHtml::tag('div',array('class'=>'toggled'),$form->textFieldRow($wall,'password',array('hint'=>g('Password required to view the wall. Leave empty for no password required.')))); ?>
+	<?php echo $form->textFieldRow($wall,'password',array('hint'=>g('Password required to view the wall. Leave empty for no password required.'))); ?>
 </fieldset>
 
 <fieldset>
