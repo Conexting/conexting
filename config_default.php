@@ -164,4 +164,24 @@ return array(
 		),
 		'vat'=>24, // VAT percent
 	),
+	
+	/**
+	 * Custom configuration for Yii config files
+	 */
+	'yiiconfig' => array(
+		/**
+		 * Common configuration to be used in both Web and Console
+		 */
+		'common'=>array(),
+		
+		/**
+		 * Configuration for Site
+		 */
+		'site'=>array(),
+		
+		/**
+		 * Configuration for Console
+		 */
+		'console'=>array(),
+	),
 );

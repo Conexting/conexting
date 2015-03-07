@@ -23,5 +23,6 @@ return CMap::mergeArray(
 		),
 		'params'=>array(
 		),
-	)
+	),
+	$cnxConfig['yiiconfig']['console']
 );

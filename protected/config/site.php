@@ -61,5 +61,6 @@ return CMap::mergeArray(
 				),
 			),
 		),
-	)
+	),
+	$cnxConfig['yiiconfig']['site']
 );
