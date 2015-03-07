@@ -1,7 +1,7 @@
 <?php
 class ActiveRecord extends CActiveRecord {
-	public static function intervalDateExpression($interval) {
-		return new CDbExpression('DATE(NOW()) + INTERVAL '.$interval.' - INTERVAL 1 SECOND');
+	public static function intervalDateExpression($interval,$start='NOW()') {
+		return new CDbExpression('DATE(NOW()) + INTERVAL '.$interval.' + INTERVAL 1 DAY - INTERVAL 1 SECOND');
 	}
 	
 	public static function intervalDate($interval,$startDate=null) {

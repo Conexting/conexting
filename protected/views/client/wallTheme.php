@@ -13,7 +13,7 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm',array(
 
 <fieldset>
 	<legend><?php t('Wall theme'); ?></legend>
-	<p><?php t('To use this theme in another wall: <a href="{url}">create a new wall using this theme</a>.',array('{url}'=>$this->createUrl("client/createWall",array("copyFromWall"=>$wall->name)))); ?></p>
+	<p><?php t('To use this theme in another wall: <a href="{url}">create a new wall using this theme</a>.',array('{url}'=>$this->createUrl("client/wallCopy",array("search"=>$wall->name)))); ?></p>
 	<?php require_once(dirname(__FILE__).'/themeVariables/'.$wall->theme.'.php'); ?>
 </fieldset>
 

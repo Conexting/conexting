@@ -31,21 +31,21 @@ body #container .chat .pinnedFeed .message {
   margin-bottom: 1em;
 }
 body #container .chat .message {
-  line-height: 110%;
   background: transparent;
   border: none;
 }
 body #container .chat .message p {
   display: inline-block;
-  text-align: left;
 }
 body #container .chat .message p .message-content {
   display: block;
   margin: 0.2em 0;
   font-size: 1.5em;
+  line-height: 110%;
 }
 body #container .chat .message.selected,
 body #container .chat .message.pinned {
   font-size: 1.5em;
+  line-height: 110%;
 }
 /*# sourceMappingURL=visualize.css.map */

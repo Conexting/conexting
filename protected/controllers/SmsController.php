@@ -29,7 +29,6 @@ class SmsController extends Controller {
 	}
 	
 	public function actionUsahidi() {
-		file_put_contents('text.txt', print_r($_REQUEST,true));
 		$sms = new Sms;
 		$sms->source = $_REQUEST['from'];
 		if( preg_match('/^(\S+)\s+(.*)$/', $_REQUEST['message'], $regs) ){
@@ -164,8 +163,23 @@ class SmsController extends Controller {
 				$successFunction($successMsg);
 			} else {
 				$senderhash = sha1('cnxsender_sms_'.$sms->source);
+				$replyParams = array('{char}'=>$choice->char,'{choice}'=>$choice->text);
+				if( $poll->limitchoices && $poll->hasOtherVotes($senderhash,$choice->choice) ) {
+					$replyMessage = g('You have changed your vote to {char}: {choice}.',$replyParams)
+						.' '.g('Thank you for your vote!');
+				} else if( $poll->limitvotes && $poll->hasVotes($senderhash,$choice->choice) ) {
+					$replyMessage = g('You have already voted {char}: {choice}.',$replyParams).' ';
+					if( $poll->limitchoices ) {
+						$replyMessage .= g('You can vote only once in this poll.');
+					} else {
+						$replyMessage .= g('You can vote this choice only once.');
+					}
+				} else {
+					$replyMessage = g('You have voted {char}: {choice}.',$replyParams)
+						.' '.g('Thank you for your vote!');
+				}
 				$poll->vote($choice->choice,$senderhash);
-				$successFunction(g('You have voted {char}: {choice}. Thank you for your vote!',array('{char}'=>$choice->char,'{choice}'=>$choice->text)));
+				$successFunction($replyMessage);
 			}
 			
 			// All SMS (messages and votes) are takend from the wall SMS credits

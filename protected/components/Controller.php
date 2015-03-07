@@ -149,6 +149,10 @@ class Controller extends CController {
 		}
 	}
 	
+	public function imageFile($file,$theme=false,$imgUrl='/images/',$imgPath='/images/',$extension='.png') {
+		return $this->getVersionedFileUrl($file,$theme,$imgUrl,$imgPath,$extension);
+	}
+	
 	protected function getVersionedFileUrl($file,$theme,$fileUrl,$filePath,$extension) {
 		if( $theme ) {
 			$url = Yii::app()->theme->baseUrl.$fileUrl.$file.$extension;

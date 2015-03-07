@@ -235,20 +235,21 @@ class StoreController extends Controller {
 			}
 			f(g('Purchase completed.'),'success');
 			$transaction->commit();
-			
-			if( $client->sendMail('store/paid',g('Conexting wall purchased'),compact('payment')) ) {
-				f(g('Confirmation of your purchase has been sent to your email address.'),'success');
-			} else {
-				f(g('Your purchase is successful, but confirmation email could not be sent to your email address. Please contact us if you require confirmation of purchase.'),'warning');
-			}
-			
-			if( $payment->Wall ) {
-				return $this->redirect(array('wall/index','wall'=>$payment->Wall->name));
-			} else if( $payment->License ) {
-				return $this->redirect(array('client/index'));
-			}
 		} catch( Exception $ex ) {
 			f(g('Error processing payment, please contact us for support').': '.$ex->getMessage(),'error');
+			return $this->redirect(array('client/index'));
+		}
+		
+		if( $client->sendMail('store/paid',g('Conexting wall purchased'),compact('payment')) ) {
+			f(g('Confirmation of your purchase has been sent to your email address.'),'success');
+		} else {
+			f(g('Your purchase is successful, but confirmation email could not be sent to your email address. Please contact us if you require confirmation of purchase.'),'warning');
+		}
+
+		if( $payment->Wall ) {
+			return $this->redirect(array('wall/index','wall'=>$payment->Wall->name));
+		} else if( $payment->License ) {
+			return $this->redirect(array('client/index'));
 		}
 		
 		return $this->redirect(array('client/index'));

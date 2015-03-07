@@ -3,7 +3,7 @@
 <?php
 if( $this->wall->enablesms && !$this->wall->isExpired ) {
 	echo CHtml::tag('p',array(),g('Vote by SMS to <b class="example">{number}</b> using format <b class="example">{prefix} <i>Choice letter</i></b> (notice spaces!)',array(
-		'{number}'=>$poll->Wall->smsnumber,
+		'{number}'=>$poll->Wall->smsCurrentNumber,
 		'{prefix}'=>trim(trim($poll->Wall->sms).' '.$poll->smsPrefix)
 	)));
 }

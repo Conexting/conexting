@@ -217,6 +217,14 @@ class Wall extends DeletableActiveRecord {
 		return null;
 	}
 	
+	public function getSmsCurrentNumber() {
+		if( !is_null($this->smsnumber) ) {
+			return $this->smsnumber;
+		} else {
+			return Yii::app()->params['defaultSmsNumber'];
+		}
+	}
+	
 	public function getSmsDefaultQuestion() {
 		if( $this->enablesms ) {
 			foreach( $this->Questions as $question ) {
@@ -286,19 +294,26 @@ class Wall extends DeletableActiveRecord {
 	}
 	
 	public function publish($length, $removedAfter, $premium=false, $voucherid=null, $smscredit=0) {
+		if( !$this->isPublished ) {
+			$extended = false;
+			$start = 'NOW()';
+		} else {
+			$extended = true;
+			$start = 'expires';
+		}
+		
 		$attributes = array(
-			'expires'=>Wall::intervalDateExpression($length),
-			'dies'=>Wall::intervalDateExpression($removedAfter),
+			'expires'=>Wall::intervalDateExpression($length,$start),
+			'dies'=>Wall::intervalDateExpression($removedAfter,$start),
 			'voucherid'=>$voucherid,
 			'premium'=>$premium,
 			'smscredit'=>$smscredit
 		);
-		if( !$this->isPublished ) {
-			$extended = false;
+		
+		if( !$extended ) {
 			$attributes['published'] = new CDbExpression('NOW()');
-		} else {
-			$extended = true;
 		}
+		
 		$this->saveAttributes($attributes);
 		
 		$this->refresh();

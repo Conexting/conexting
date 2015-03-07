@@ -3,7 +3,7 @@
 <?php
 if( $this->wall->enablesms && !$this->wall->isExpired ) {
 	echo CHtml::tag('p',array(),g('Answer by SMS to <b class="example">{number}</b> using format <b class="example">{prefix} <i>Your answer...</i></b> (notice spaces!)',array(
-		'{number}'=>$question->Wall->smsnumber,
+		'{number}'=>$question->Wall->smsCurrentNumber,
 		'{prefix}'=>trim($question->Wall->sms.' '.$question->smsPrefix)
 	)));
 }

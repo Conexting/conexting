@@ -15,7 +15,7 @@ if( $this->wall->enablestream ) {
 <?php
 if( $this->wall->enablesms && !$this->wall->isExpired && is_null($this->wall->smsDefaultQuestion) ) {
 	echo CHtml::tag('p',array(),g('Send a message by SMS to <b class="example">{number}</b> using format <b class="example">{prefix} <i>Your message...</i></b> (notice spaces!)',array(
-		'{number}'=>$this->wall->smsnumber,
+		'{number}'=>$this->wall->smsCurrentNumber,
 		'{prefix}'=>trim($this->wall->sms)
 	)));
 }

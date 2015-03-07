@@ -90,12 +90,13 @@ class Poll extends DeletableActiveRecord {
 		);
 		
 		// If choices are limited, delete all but the selected choice
+		$deleted = 0;
 		if( $this->limitchoices ) {
-			PollVote::model()->deleteAll('pollid=:pollid AND senderhash=:senderhash AND choice<>:choice',$pollChoiceParams);
+			$deleted += PollVote::model()->deleteAll('pollid=:pollid AND senderhash=:senderhash AND choice<>:choice',$pollChoiceParams);
 		}
 		// If votes are limited, delete all votes from this choice
 		if( $this->limitvotes ) {
-			PollVote::model()->deleteAll('pollid=:pollid AND senderhash=:senderhash AND choice=:choice',$pollChoiceParams);
+			$deleted += PollVote::model()->deleteAll('pollid=:pollid AND senderhash=:senderhash AND choice=:choice',$pollChoiceParams);
 		}
 
 		$newVote = new PollVote;
@@ -103,5 +104,27 @@ class Poll extends DeletableActiveRecord {
 		$newVote->choice = $choice;
 		$newVote->senderhash = $senderhash;
 		$newVote->trySave();
+		
+		return $deleted;
+	}
+	
+	public function hasVotes($senderhash,$choice) {
+		$pollChoiceParams = array(
+			':pollid'=>$this->primaryKey,
+			':senderhash'=>$senderhash,
+			':choice'=>$choice
+		);
+
+		return PollVote::model()->exists('pollid=:pollid AND senderhash=:senderhash AND choice=:choice',$pollChoiceParams);
+	}
+	
+	public function hasOtherVotes($senderhash,$choice) {
+		$pollChoiceParams = array(
+			':pollid'=>$this->primaryKey,
+			':senderhash'=>$senderhash,
+			':choice'=>$choice
+		);
+
+		return PollVote::model()->exists('pollid=:pollid AND senderhash=:senderhash AND choice<>:choice',$pollChoiceParams);
 	}
 }

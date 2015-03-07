@@ -28,7 +28,23 @@ $this->cssFile('engine');
 			<h3><?php t('Premium features'); ?></h3>
 		</div>
 		<div class="modal-body">
-			<p><?php t('For a complete list of features see:'); ?></p>
+			<p>
+				<?php t('These are Premium features.'); ?>
+				<?php t('You can try all these features for free.'); ?>
+				<?php t('When you publish a wall with premium features you can select a Premium-product that best suits your requirements.'); ?>
+			</p>
+			<ul>
+				<li><?php t('SMS-messages and SMS-voting'); ?></li>
+				<li><?php t('Pre-moderate messages'); ?></li>
+				<li><?php t('No signing in required for Twitter'); ?></li>
+			</ul>
+			<p>
+				<?php
+				$firstOption = reset(Yii::app()->params['store']['walls']);
+				t('Premium-wall from {n} €.',$firstOption['price']);
+				?>
+				<?php t('See the <a href="{url}">features-page</a> for full list of features and pricing.',array('{url}'=>$this->createUrl('info/features'))); ?>
+			</p>
 		</div>
 		<div class="modal-footer">
 			<button class="btn" data-dismiss="modal"><?php t('Ok'); ?></button>

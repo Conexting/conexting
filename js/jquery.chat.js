@@ -63,14 +63,27 @@
 				}
 				
 				chat.data('chat',{});
+				$('.readmore',chat).attr('rel',settings.messageCount);
+				$('.nickname-modal',chat).modal({
+					show: false
+				}).on('click','.nickname-save',function(){
+					var username = $.trim($('.nickname-modal input',chat).val());
+					if( username.length === 0 ) {
+						// Do not close if the nickname is empty
+					} else {
+						$('.my_username',chat).text(username);
+						chat.chat('registerUser');
+						$('.nickname-modal',chat).modal('hide');
+					}
+				});
 				
-				$('input.messageText',chat).live('keypress',function(event){
+				chat.on('keypress','input.messageText',function(event){
 					// Enter-key sends the message
-					if( event.keyCode == '13' ) {
+					if( event.keyCode === '13' ) {
 						event.preventDefault();
 						chat.chat('sendMessage');
 					}
-				}).live('keyup',function(event){
+				}).on('keyup','input.messageText',function(event){
 					// Check maximum length
 					var mentionLength = 0;
 					var parentMessage = $(this).closest('.message');
@@ -85,15 +98,11 @@
 						$(this).val($(this).val().substr(0,settings.maxLength-usernameLength-mentionLength));
 						chat.chat('showInfo',settings.strings.msgMaxLengthReached,'warning');
 					}
-				});
-				
-				$('button.send',chat).live('click',function(){
+				}).on('click','button.send',function(){
 					chat.chat('sendMessage');
 					return false;
-				});
-				
-				// Clicking 'reply' moves message input under the message that user replies to
-				$('.message a.reply',chat).live('click',function(){
+				}).on('click','.message a.reply',function(){
+					// Clicking 'reply' moves message input under the message that user replies to
 					if( $(this).text() === settings.strings.reply ) {
 						$('.message a.reply',chat).text(settings.strings.reply).removeClass('cancel-reply');
 						if( $('.msg-placeholder',chat).length > 0 ) {
@@ -111,17 +120,13 @@
 						$('.msg .messageText').focus();
 					}
 					return false;
-				});
-				
-				// Clicking placeholder (original message input) cancels reply
-				$('.msg-placeholder',chat).live('click',function(){
+				}).on('click','.msg-placeholder',function(){
+					// Clicking placeholder (original message input) cancels reply
 					$('a.cancel-reply',chat).click();
 					$('.msg input',chat).focus();
 					return false;
-				});
-				
-				// "Read more" -link loads older messages
-				$('.readmore',chat).attr('rel',settings.messageCount).live('click',function(){
+				}).on('click','.readmore',function(){
+					// "Read more" -link loads older messages
 					var offset = parseInt($(this).attr('rel'));
 					if( settings.maxMessages > 0 ) {
 						settings.maxMessages += offset;
@@ -252,7 +257,7 @@
 				if( $('.my_username',chat).length > 0 && $('.my_username',chat).text() === '' ) {
 					chat.chat('changeUsername');
 				}
-				$('.change-username',chat).live('click',function(){
+				chat.on('click','.change-username',function(){
 					chat.chat('changeUsername');
 					return false;
 				});
@@ -636,35 +641,9 @@
 		},
 		changeUsername: function(){
 			var chat = this;
-			var dialog = $('<div><input type="text" name="username_input" size="15" /></div>');
-			
-			var closeDialog = function(){
-				var username = $.trim($('input',this).val());
-				if( username.length === 0 ) {
-					// Do not close if the nickname is empty
-				} else {
-					$('.my_username',chat).text(username);
-					chat.chat('registerUser');
-					$(this).dialog('close');
-				}
-			};
-			dialog.dialog({
-				autoOpen: true,
-				modal: true,
-				resizable: false,
-				title: settings.strings.nicknameInput,
-				buttons: {
-					'Ok': closeDialog
-				},
-				open: function(){
-					$('input',this).val($('.my_username',chat).text()).live('keypress',function(event){
-						if( event.keyCode == '13' ) {
-							event.preventDefault();
-							closeDialog.apply(dialog);
-						}
-					});
-				}
-			});
+			var dialog = $('.nickname-modal',chat);
+			$('input',dialog).val($('.my_username',chat).text());
+			dialog.modal('show');
 		},
 		registerUser: function(){
 			var username = $('.my_username',this).text();

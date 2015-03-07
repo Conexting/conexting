@@ -26,6 +26,20 @@ Yii::app()->clientScript->registerScript('chat_'.$this->id,$chatScript);
 		</div>
 	</div>
 	<div class="msginfo"></div>
+	<div class="modal hide fade nickname-modal">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<h3><?php t('Select nickname'); ?></h3>
+		</div>
+		<div class="modal-body">
+			<p>
+				<input type="text" class="input-medium" />
+			</p>
+		</div>
+		<div class="modal-footer">
+			<a href="#" class="btn btn-primary nickname-save"><?php t('OK'); ?></a>
+		</div>
+	</div>
 	<?php } ?>
 
 	<?php if( $this->showSearch ) { ?>

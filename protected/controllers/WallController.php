@@ -841,7 +841,7 @@ class WallController extends Controller {
 	 * @return type 
 	 */
 	protected function getFeed($count=20,$offset=0,$since=false,$question=null,$lastUpdate=null,$queue=false,$onlyDeleted=false) {
-		if( $this->wall->enabletwitter && !$this->wall->isExpired ) {
+		if( $this->wall->enabletwitter && $this->wall->isPublished && !$this->wall->isExpired ) {
 			Yii::app()->twitter->refreshFeed($this->wall);
 		}
 		

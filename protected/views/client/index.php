@@ -6,7 +6,7 @@
 					'type'=>'primary',
 					'size'=>'large',
 					'encodeLabel'=>false,
-					'url'=>$this->createUrl('createWall'),
+					'url'=>array('wallCreate'),
 					'label'=>'<i class="fa fa-comments-o fa-2x"></i> '.g('Create your first Conexting wall'),
 				)); ?>
 	</div>

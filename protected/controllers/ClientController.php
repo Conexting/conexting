@@ -93,8 +93,8 @@ class ClientController extends Controller {
 		return $this->render('walls',compact('data','showDeleted'));
 	}
 	
-	public function actionWallCreate($from=false) {
-		return $this->editWall(false,false,false,$from);
+	public function actionWallCreate($from=false, $retrieve=false) {
+		return $this->editWall(false,$retrieve,false,$from);
 	}
 	
 	public function actionWallSettings($search, $retrieve=false, $from=false) {
@@ -127,10 +127,20 @@ class ClientController extends Controller {
 			$wall->attributes = $_POST['Wall'];
 			if( isset($_POST['sign-in-twitter']) ) {
 				Yii::app()->session['WallCache'] = $_POST['Wall'];
-				return $this->redirect(array($this->id.'/signInWithTwitter','wallname'=>$wall->name));
+				if( $wall->isNewRecord ) {
+					$wallname = false;
+				} else {
+					$wallname = $wall->name;
+				}
+				return $this->redirect(array($this->id.'/signInWithTwitter','wallname'=>$wallname));
 			} else if( isset($_POST['sign-out-twitter']) ) {
 				Yii::app()->session['WallCache'] = $_POST['Wall'];
-				return $this->redirect(array($this->id.'/disconnectTwitter','wallname'=>$wall->name));
+				if( $wall->isNewRecord ) {
+					$wallname = false;
+				} else {
+					$wallname = $wall->name;
+				}
+				return $this->redirect(array($this->id.'/disconnectTwitter','wallname'=>$wallname));
 			} else if( $wall->validate() ) {
 				$transaction = Yii::app()->db->beginTransaction();
 				try {
@@ -158,6 +168,8 @@ class ClientController extends Controller {
 			}
 		} else if( $retrieve ) {
 			$wall->attributes = Yii::app()->session['WallCache'];
+			$wall->twitteruser = Yii::app()->session['WallCache']['twitteruser'];
+			Yii::app()->session['WallCache'] = null;
 		}
 		
 		return $this->render('wallSettings',compact('wall'));
@@ -280,8 +292,13 @@ class ClientController extends Controller {
 		
 		$options = Yii::app()->params['store']['walls'];
 		foreach( array_keys($options) as $key ) {
-			$options[$key]['expires'] = Wall::intervalDate($options[$key]['length'],$wall->expires);
-			$options[$key]['dies'] = Wall::intervalDate($options[$key]['removedAfter'],$wall->expires);
+			$startDate = null;
+			if( $wall->premium ) {
+				// Extending purchased Premium-wall extension starts when current purchase expires
+				$startDate = $wall->expires;
+			}
+			$options[$key]['expires'] = Wall::intervalDate($options[$key]['length'],$startDate);
+			$options[$key]['dies'] = Wall::intervalDate($options[$key]['removedAfter'],$startDate);
 		}
 		
 		if( $_POST['voucher'] ) {
@@ -320,19 +337,21 @@ class ClientController extends Controller {
 	}
 	
 	public function actionSignInWithTwitter($wallname,$search=false,$denied=false) {
-		$wall = $this->getWallByName($wallname,'index');
-		
 		Yii::app()->twitter->setApp(Yii::app()->twitter->appidWithUser);
 		if( $search == 'complete' ) {
 			if( !$denied ) {
 				$twUser = Yii::app()->twitter->accessToken($_REQUEST['oauth_verifier']);
 				if( $twUser ) {
-					$wall->saveAttributes(array(
-						'twitteruser' => $twUser->primaryKey
-					));
+					$wallCache = Yii::app()->session['WallCache'];
+					$wallCache['twitteruser'] = $twUser->primaryKey;
+					Yii::app()->session['WallCache'] = $wallCache;
 				}
 			}
-			return $this->redirect(array($this->id.'/wallSettings','search'=>$wallname,'retrieve'=>true));
+			if( $wallname ) {
+				return $this->redirect(array($this->id.'/wallSettings','search'=>$wallname,'retrieve'=>true));
+			} else {
+				return $this->redirect(array($this->id.'/wallCreate','retrieve'=>true));
+			}
 		} else {
 			$url = Yii::app()->twitter->requestToken($this->createAbsoluteUrl($this->route,array('wallname'=>$wallname,'search'=>'complete')));
 			return $this->redirect($url);
@@ -340,13 +359,15 @@ class ClientController extends Controller {
 	}
 	
 	public function actionDisconnectTwitter($wallname) {
-		$wall = $this->getWallByName($wallname,'index');
+		$wallCache = Yii::app()->session['WallCache'];
+		$wallCache['twitteruser'] = null;
+		Yii::app()->session['WallCache'] = $wallCache;
 		
-		$wall->saveAttributes(array(
-			'twitteruser' => null
-		));
-		
-		return $this->redirect(array($this->id.'/walls','search'=>$wallname,'retrieve'=>true));
+		if( $wallname ) {
+			return $this->redirect(array($this->id.'/wallSettings','search'=>$wallname,'retrieve'=>true));
+		} else {
+			return $this->redirect(array($this->id.'/wallCreate','retrieve'=>true));
+		}
 	}
 	
 	public function actionSignup() {
@@ -447,11 +468,17 @@ class ClientController extends Controller {
 		return $this->render('forgottenPassword',compact('client'));
 	}
 	
-	private function getWallByName($name, $redirectFrom=false) {
-		$wall = Wall::model()->findByAttributes(array(
-			'name'=>$name,
-			'clientid'=>Yii::app()->user->client->primaryKey
-		));
+	private function getWallByName($name, $redirectFrom=false, $useCache=false) {
+		if( $useCache && Yii::app()->session['WallCache'] ) {
+			$wall = new Wall();
+			$wall->attributes = Yii::app()->session['WallCache'];
+		} else {
+			$wall = Wall::model()->findByAttributes(array(
+				'name'=>$name,
+				'clientid'=>Yii::app()->user->client->primaryKey
+			));
+		}
+		
 		if( is_null($wall) && $redirectFrom !== false ) {
 			return $this->redirectFrom($redirectFrom);
 		}
