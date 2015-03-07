@@ -291,7 +291,7 @@
 		insertMessage: function(message){
 			var chat = this;
 			
-			if( message == null ) {
+			if( message === null ) {
 				return this;
 			}
 			if( $('#message_'+message.messageid,chat).length > 0 ) {
@@ -681,7 +681,7 @@
 	$.fn.chat = function(method){
 		if( methods[method] ) {
 			return methods[method].apply(this,Array.prototype.slice.call(arguments,1));
-		} else if( typeof method == 'object' || !method ) {
+		} else if( typeof method === 'object' || !method ) {
 			return methods.init.apply( this, arguments );
 		} else {
 			$.error('Method ' +  method + ' does not exist on jQuery.chat');
