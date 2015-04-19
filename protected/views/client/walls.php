@@ -59,7 +59,12 @@
 		array(
 			'header'=>'',
 			'value'=>function($data){
-				if( !$data->isPublished ) {
+				if( $data->deleted ) {
+					return CHtml::link(
+						'<i class="icon-refresh"></i> '.g('Undelete'),
+						Yii::app()->createUrl("client/wallUndelete",array("search"=>$data->name,"id"=>$data->wallid,"from"=>"walls"))
+					);
+				} else if( !$data->isPublished ) {
 					$linkText = '<i class="fa fa-comments-o"></i> '.g('Publish wall');
 				} else if( !$data->isExpired && !$data->premium ) {
 					$linkText = '<i class="fa fa-cloud-upload"></i> '.g('Upgrade to Premium');

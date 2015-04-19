@@ -11,14 +11,19 @@ $attributes = array(
 	'title',
 );
 if( $payment->Wall ) {
+	$startDate = null;
+	if( $payment->Wall->premium ) {
+		// Extending purchased Premium-wall extension starts when current purchase expires
+		$startDate = $payment->Wall->expires;
+	}
 	$attributes[] = 'Wall.displayTitle';
 	$attributes[] = array(
 		'name'=>'Wall.expires',
-		'value'=>Wall::intervalDate($option['length'])->format('j.n.Y H:i')
+		'value'=>Wall::intervalDate($option['length'],$startDate)->format('j.n.Y H:i')
 	);
 	$attributes[] = array(
 		'name'=>'Wall.dies',
-		'value'=>Wall::intervalDate($option['removedAfter'])->format('j.n.Y H:i')
+		'value'=>Wall::intervalDate($option['removedAfter'],$startDate)->format('j.n.Y H:i')
 	);
 } else if( $payment->License ) {
 	$attributes[] = array(

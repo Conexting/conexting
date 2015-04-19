@@ -315,17 +315,20 @@ class Wall extends DeletableActiveRecord {
 	}
 	
 	public function publish($length, $removedAfter, $premium=false, $voucherid=null, $smscredit=0) {
-		if( !$this->isPublished ) {
+		if( !$this->isPublished || !$this->premium || $this->isExpired ) {
 			$extended = false;
 			$start = 'NOW()';
+			$startForDies = 'NOW()';
 		} else {
 			$extended = true;
 			$start = 'expires';
+			// MySQL uses new value for expires instead of the original value
+			$startForDies = 'expires - INTERVAL '.$length;
 		}
 		
 		$attributes = array(
 			'expires'=>Wall::intervalDateExpression($length,$start),
-			'dies'=>Wall::intervalDateExpression($removedAfter,$start),
+			'dies'=>Wall::intervalDateExpression($removedAfter,$startForDies),
 			'voucherid'=>$voucherid,
 			'premium'=>$premium,
 			'smscredit'=>$smscredit
