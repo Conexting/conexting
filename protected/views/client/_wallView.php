@@ -52,11 +52,11 @@ if( $data->published && $data->hidden ) {
 			</div>
 			<div class="span3">
 				<dl>
-					<dt><?php t('Created'); ?>:</dt><dd><?php echo $data->creationDate; ?></dd>
+					<dt><?php t('Created'); ?>:</dt><dd><?php echo $data->creationTime; ?></dd>
 					<?php if( $data->expires ) { ?>
-						<dt><?php t('Expires'); ?>:</dt><dd><?php echo $data->expirationDate; ?></dd>
+						<dt><?php t('Expires'); ?>:</dt><dd><?php echo $data->expirationTime; ?></dd>
 					<?php } else if( $data->dies ) { ?>
-						<dt><?php t('Wall removed'); ?>:</dt><dd><?php echo $data->DyingDate; ?></dd>
+						<dt><?php t('Wall removed'); ?>:</dt><dd><?php echo $data->dyingDate; ?></dd>
 					<?php } ?>
 				</dl>
 			</div>

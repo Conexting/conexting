@@ -63,7 +63,7 @@ class Contact extends DeletableActiveRecord {
 	public function getPaymentSum() {
 		$sum = 0;
 		foreach( $this->Payments as $payment ) {
-			$sum += $payment->total;
+			$sum += $payment->price;
 		}
 		return $sum;
 	}

@@ -56,12 +56,12 @@ echo $form->errorSummary($wall);
 				}
 				?>
 				</p>
-				<p class="help-block">
+				<p>
 					<?php t('Tweets from the wall website and SMS are sent using this account.'); ?>
 				</p>
-				<p class="help-block">
-					<?php echo $premiumText; ?> -  
+				<p>
 					<?php t('You can also use the shared twitter account, but it will result in longer delay when fetching tweets.'); ?>
+					<?php t('This is a {premium}-feature.',array('{premium}'=>$premiumText)); ?>
 				</p>
 			</div>
 		</div>

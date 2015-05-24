@@ -18,6 +18,7 @@ class Wall extends DeletableActiveRecord {
 			'Questions' => array(self::HAS_MANY,'Question','wallid','order'=>'position ASC'),
 			'Variables' => array(self::HAS_MANY,'WallVariable','wallid','index'=>'name'),
 			'TwitterUser' => array(self::BELONGS_TO,'Twitteruser','twitteruser'),
+			'Voucher' => array(self::BELONGS_TO,'Voucher','voucherid'),
 		);
 	}
 	
@@ -277,7 +278,7 @@ class Wall extends DeletableActiveRecord {
 	}
 	
 	public function getIsPublished() {
-		return !is_null($this->published) && $this->published < time();
+		return !is_null($this->published) && $this->published <= time();
 	}
 	
 	public function getThemeModel() {

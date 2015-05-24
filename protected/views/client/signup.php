@@ -15,4 +15,8 @@ echo $form->errorSummary($client);
 	<?php $this->widget('bootstrap.widgets.TbButton',array('buttonType'=>'submit','label'=>g('Sign up'))); ?>
 </div>
 <?php $this->endWidget(); ?>
+	<p>
+		<?php t('Already have an account?'); ?>
+		<?php echo CHtml::link(g('Log in'),$this->createUrl('client/login')); ?>
+	</p>
 </div>

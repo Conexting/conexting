@@ -14,7 +14,11 @@ class StoreController extends Controller {
 		);
 	}
 	
-	public function actionWall($search, $option, $returnUrl, $vouchercode=false) {
+	public function actionWall($search, $option=false, $returnUrl=false, $vouchercode=false) {
+		if( $returnUrl === false ) {
+			$returnUrl = array('client/index');
+		}		
+		
 		$wall = Wall::model()->find('UPPER(name) LIKE UPPER(:name)',array(
 			':name'=>$search
 		));
@@ -52,7 +56,7 @@ class StoreController extends Controller {
 						if( is_null($voucher) ) {
 							throw new Exception(g('Voucher code <em>{code}</em> could not be found, please check the code you entered.',array('{code}'=>CHtml::encode($vouchercode))));
 						}
-						$voucher->check();
+						$voucher->check(Yii::app()->user->client->primaryKey);
 						$transaction->commit();
 						return $this->redirect(array($this->id.'/redeem','search'=>$wall->name,'vouchercode'=>$voucher->code,'returnUrl'=>$returnUrl));
 					} else {
@@ -75,7 +79,11 @@ class StoreController extends Controller {
 			}
 		}
 		
-		$this->pageTitle = g('Purchase Premium-wall');
+		if( $vouchercode ) {
+			$this->pageTitle = g('Redeem Premium-wall');
+		} else {
+			$this->pageTitle = g('Purchase Premium-wall');
+		}
 		return $this->render('wall',compact('contact','returnUrl'));
 	}
 	
@@ -106,7 +114,9 @@ class StoreController extends Controller {
 			return $this->redirect(array('wall/index','wall'=>$wall->name));
 		}
 		
-		return $this->render('redeem',compact('wall','voucher'));
+		$contact = Yii::app()->user->client->Contact;
+		$wall->Voucher = $voucher;
+		return $this->render('redeem',compact('wall','voucher','contact'));
 	}
 	
 	public function actionLicense() {
@@ -198,7 +208,8 @@ class StoreController extends Controller {
 		}
 		
 		$this->pageTitle = g('Confirm purchase');
-		return $this->render('pay',compact('payment','option'));
+		$contact = $payment->Contact;
+		return $this->render('pay',compact('payment','option','contact'));
 	}
 	
 	public function actionPayOk() {

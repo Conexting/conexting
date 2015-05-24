@@ -11,16 +11,6 @@
     'code',
 		'title',
 		'price',
-		'amount',
-		array(
-			'name'=>'coupon',
-			'value'=>$record->Coupon->code,
-		),
-    array(
-			'name'=>'discount',
-			'value'=>$record->discount.' %'
-		),
-		'total'
   ),
 )); ?>
 <?php $this->widget('bootstrap.widgets.TbButton', array(

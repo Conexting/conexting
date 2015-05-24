@@ -16,11 +16,12 @@ class Voucher extends ActiveRecord {
 	
 	public function rules() {
 		return array(
-			array('walllength','in','range'=>array_keys(Yii::app()->params['store']['walls'])),
-			array('code','length','max'=>128),
-			array('count','numerical','min'=>0,'max'=>9999),
-			array('expires','safe'),
+			array('walllength,wallremovedafter','length','max'=>32),
+			array('name,code','length','max'=>128),
+			array('wallsmscredit,count,countperclient','numerical','min'=>0,'max'=>9999),
+			array('expirationTime','safe'),
 			array('active','boolean'),
+			array('name,code,walllength,wallremovedafter,expirationTime','required'),
 			
 			array('voucherid,code,wallength,expires,count','safe','on'=>'search'),
 		);
@@ -28,7 +29,8 @@ class Voucher extends ActiveRecord {
 	
 	public function attributeLabels() {
 		return array(
-			// --
+			'name'=>g('Voucher name'),
+			'code'=>g('Voucher code'),
 		);
 	}
 	
@@ -51,18 +53,30 @@ class Voucher extends ActiveRecord {
 		}
 	}
 	
-	public function check() {
+	public function getWallCount($clientId=false) {
+		$wallModel = Wall::model();
+		$wallModel->showDeleted = true;
+		$attributes = array('voucherid'=>$this->primaryKey);
+		if( $clientId ) {
+			$attributes['clientid'] = $clientId;
+		}
+		$count = $wallModel->countByAttributes($attributes);
+		$wallModel->showDeleted = false;
+		return $count;
+	}
+	
+	public function check($clientId) {
 		if( $this->expires < time() ) {
 			throw new Exception(g('Sorry, the voucher code you have entered has been expired.'));
 		}
 		if( !$this->active ) {
-			throw new Exception(g('Sorry, the voucher code you have entered is no longer active.'));
+			throw new Exception(g('Sorry, the voucher code you have entered is not currently active.'));
 		}
-		$wallModel = Wall::model();
-		$wallModel->showDeleted = true;
-		if( $this->count >= $wallModel->findAllByAttributes(array('voucherid'=>$this->primaryKey)) ) {
+		if( $this->count <= $this->wallCount ) {
 			throw new Exception(g('Sorry, this voucher code has already been used.'));
 		}
-		$wallModel->showDeleted = false;
+		if( $this->countperclient <= $this->getWallCount($clientId) ) {
+			throw new Exception(g('Sorry, you have already used this voucher code.'));
+		}
 	}
 }

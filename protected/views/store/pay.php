@@ -3,7 +3,8 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 	'type'=>'horizontal',
 ));
 ?>
-<div class="well <?php echo $payment->confirmed && $payment->paid ? 'span7' : 'row-fluid'; ?>">
+<div class="well">
+	<div class="<?php echo $payment->confirmed && $payment->paid ? 'span7' : 'row-fluid'; ?>">
 	<div class="span6">
 		<h2><?php t('Purchase details'); ?></h2>
 <?php
@@ -79,6 +80,21 @@ $this->widget('bootstrap.widgets.TbDetailView',array(
 ?>
 	</div>
 <?php } ?>
-	
+</div>
 </div>
 <?php $this->endWidget(); ?>
+
+<div class="smallprint">
+	<h4>Maksupalvelutarjoaja</h4>
+	<p>Maksunvälityspalvelun toteuttajana ja maksupalveluntarjoajana toimii Paytrail Oyj (2122839-7) yhteistyössä suomalaisten pankkien ja luottolaitosten kanssa. Paytrail Oyj näkyy maksun saajana tiliotteella tai korttilaskulla ja välittää maksun kauppiaalle. Paytrail Oyj:llä on maksulaitoksen toimilupa. Reklamaatiotapauksissa pyydämme ottamaan ensisijaisesti yhteyttä tuotteen toimittajaan.</p>
+	<address>
+		Paytrail Oyj, y-tunnus: 2122839-7<br />
+		Innova 2<br />
+		Lutakonaukio 7<br />
+		40100 Jyväskylä<br />
+		Puhelin: 0207 181830<br />
+		www.paytrail.com
+	</address>
+	<h4>Verkkopankit</h4>
+	<p>Verkkopankkimaksamiseen liittyvän maksunvälityspalvelun toteuttaa Paytrail Oyj (2122839-7) yhteistyössä suomalaisten pankkien ja luottolaitosten kanssa. Käyttäjän kannalta palvelu toimii aivan kuten perinteinen verkkomaksaminenkin.</p>
+</div>

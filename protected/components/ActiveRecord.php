@@ -1,16 +1,22 @@
 <?php
 class ActiveRecord extends CActiveRecord {
-	public static function intervalDateExpression($interval,$start='NOW()') {
-		return new CDbExpression('DATE('.$start.') + INTERVAL '.$interval.' + INTERVAL 1 DAY - INTERVAL 1 SECOND');
+	public static function intervalDateExpression($interval,$start='NOW()',$untilEndOfDay=false) {
+		$expression = $start.' + INTERVAL '.$interval;
+		if( $untilEndOfDay ) {
+			$expression .= ' + INTERVAL 1 DAY - INTERVAL 1 SECOND';
+		}
+		return new CDbExpression($expression);
 	}
 	
-	public static function intervalDate($interval,$startDate=null) {
-		$endOfDay = new DateTime();
+	public static function intervalDate($interval,$startDate=null,$untilEndOfDay=false) {
+		$date = new DateTime();
 		if( !is_null($startDate) && $startDate > time() ) {
-			$endOfDay->setTimestamp($startDate);
+			$date->setTimestamp($startDate);
 		}
-		$endOfDay->setTime(23, 59, 59);
-		return date_add($endOfDay,date_interval_create_from_date_string($interval));
+		if( $untilEndOfDay ) {
+			$date->setTime(23, 59, 59);
+		}
+		return date_add($date,date_interval_create_from_date_string($interval));
 	}
 	
 	public function search($criteria=array(),$defaultSort=null) {

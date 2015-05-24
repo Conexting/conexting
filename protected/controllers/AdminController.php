@@ -157,7 +157,7 @@ class AdminController extends Controller {
 	
 	public function actionPayment($id=false) {
 		if( $id === false ) {
-			// List coupons
+			// List payments
 			$filter = new Payment('search');
 			$data = $filter->search(array(
 				'order'=>'created DESC'

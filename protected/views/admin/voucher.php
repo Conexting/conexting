@@ -4,16 +4,21 @@ $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
 )); ?>
 
 <fieldset>
-	<legend><?php t('Coupon details'); ?></legend>
-	<?php echo $form->textFieldRow($coupon,'code'); ?>
-	<?php echo $form->textFieldRow($coupon,'discount'); ?>
-	<?php echo $form->dropDownListRow($coupon,'resellerid',array(''=>'-')+CHtml::listData(Reseller::model()->findAll(),'resellerid','name')); ?>
-	<?php echo $form->checkBoxRow($coupon,'active'); ?>
+	<legend><?php t('Voucher details'); ?></legend>
+	<?php echo $form->textFieldRow($voucher,'name'); ?>
+	<?php echo $form->textFieldRow($voucher,'code'); ?>
+	<?php echo $form->textFieldRow($voucher,'walllength'); ?>
+	<?php echo $form->textFieldRow($voucher,'wallremovedafter'); ?>
+	<?php echo $form->textFieldRow($voucher,'wallsmscredit'); ?>
+	<?php echo $form->textFieldRow($voucher,'expirationTime',array('type'=>'datetime')); ?>
+	<?php echo $form->textFieldRow($voucher,'count'); ?>
+	<?php echo $form->textFieldRow($voucher,'countperclient'); ?>
+	<?php echo $form->checkBoxRow($voucher,'active'); ?>
 </fieldset>
 
 <div class="form-actions">
 <?php $this->widget('bootstrap.widgets.TbButton',array('buttonType'=>'submit','type'=>'primary','label'=>g('Save'))); ?>
-<?php $this->widget('bootstrap.widgets.TbButton',array('buttonType'=>'link','label'=>g('Cancel'),'url'=>$this->createUrl('admin/coupon'))); ?>
+<?php $this->widget('bootstrap.widgets.TbButton',array('buttonType'=>'link','label'=>g('Cancel'),'url'=>$this->createUrl('admin/voucher'))); ?>
 </div>
 
 <?php $this->endWidget(); ?>

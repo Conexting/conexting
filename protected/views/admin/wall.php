@@ -73,7 +73,7 @@ echo $form->errorSummary($wall);
 
 <div class="form-actions">
 <?php $this->widget('bootstrap.widgets.TbButton',array('buttonType'=>'submit','type'=>'primary','label'=>g('Save'))); ?>
-<?php $this->widget('bootstrap.widgets.TbButton',array('buttonType'=>'link','label'=>g('Cancel'),'url'=>$this->createUrl('admin/walls'))); ?>
+<?php $this->widget('bootstrap.widgets.TbButton',array('buttonType'=>'link','label'=>g('Cancel'),'url'=>$this->createUrl('admin/viewWall',array('id'=>$wall->primaryKey)))); ?>
 </div>
 
 <?php $this->endWidget(); ?>

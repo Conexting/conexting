@@ -17,10 +17,15 @@
 			'name'=>'expires',
 			'value'=>'$data->expirationDate',
 		),
+		'count',
+		array(
+			'name'=>'wallCount',
+			'header'=>g('Used'),
+		),
 		array(
 			'class'=>'bootstrap.widgets.TbButtonColumn',
 			'template'=>'{view}',
-			'viewButtonUrl'=>'Yii::app()->createUrl("admin/viewCoupon",array("id"=>$data->primaryKey))',
+			'viewButtonUrl'=>'Yii::app()->createUrl("admin/viewVoucher",array("id"=>$data->primaryKey))',
 		),
 	),
 )); ?>

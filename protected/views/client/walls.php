@@ -36,7 +36,7 @@
 			'value'=>function($data){
 				$str = '';
 				if( !is_null($data->expires) ) {
-					$str .= $data->expirationDate.' ';
+					$str .= $data->expirationTime.' ';
 				}
 				if( $data->isExpired ) {
 					$str .= ' <span class="label label-warning">'.g('Expired').'</span>';

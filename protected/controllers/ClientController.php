@@ -305,8 +305,13 @@ class ClientController extends Controller {
 			$voucher = Voucher::model()->findByAttributes(array('code'=>$_POST['voucher']));
 			
 			if( !is_null($voucher) ) {
-				f(g('Voucher accepted, please fill in your details to redeem your free Conexting wall.'),'success');
-				return $this->redirect(array('store/wall','search'=>$wall->name,'vouchercode'=>$voucher->code,'returnUrl'=>$this->createUrl('',array('search'=>$search,'from'=>$from))));
+				try {
+					$voucher->check(Yii::app()->user->client->primaryKey);
+					f(g('Voucher accepted, please fill in your details to redeem your free Conexting wall.'),'success');
+					return $this->redirect(array('store/wall','search'=>$wall->name,'vouchercode'=>$voucher->code,'returnUrl'=>$this->createUrl('',array('search'=>$search,'from'=>$from))));
+				} catch (Exception $ex) {
+					f($ex->getMessage(),'warning');
+				}
 			} else {
 				f(g('Voucher code <em>{code}</em> could not be found, please check the code you entered.',array('{code}'=>CHtml::encode($_POST['voucher']))),'error');
 			}
@@ -381,7 +386,7 @@ class ClientController extends Controller {
 				if( $client->sendMail('client/signup',g('Your Conexting account details'),compact('password')) ) {
 					f(g('Your account has been created! Check your email to complete the registration.'),'success');
 					$client->trySave();
-					return $this->redirect(array('site/index'));
+					return $this->redirect(array('client/login'));
 				} else {
 					f(g('Error sending email! Please contact us to create your account.'),'error');
 				}
@@ -455,7 +460,7 @@ class ClientController extends Controller {
 					$url = $this->createAbsoluteUrl('client/changePassword',array('urllogin'=>$loginHash));
 					$client->sendMail('client/forgottenPassword',g('Conexting password reset'),compact('url'));
 					f(g('Password has been sent to <em>{address}</em>',array('{address}'=>CHtml::encode($client->email))),'success');
-					return $this->redirect(array('site/index'));
+					return $this->redirect(array('client/login'));
 				} else {
 					f(g('Email address you provided was not found, check the email address.'),'error');
 				}

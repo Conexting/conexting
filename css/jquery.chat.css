@@ -118,6 +118,7 @@ a.admin-icon.admin-approve-message {
 	border-color: #ffdd57;
 	border-width: 3px;
 	border-style: solid;
+	margin: -3px;
 }
 
 a.change-username {
@@ -133,5 +134,5 @@ a.change-username {
 }
 
 .message.pinned {
-	border: 3px dotted #F00;
+	border: 3px dotted #81bb42;
 }

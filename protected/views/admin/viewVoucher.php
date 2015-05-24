@@ -1,47 +1,67 @@
-<h2><?php t('Coupon details'); ?></h2>
+<h2><?php t('Voucher details'); ?></h2>
 <?php $this->widget('bootstrap.widgets.TbDetailView',array(
 	'data'=>$record,
   'nullDisplay'=>'<span class="muted">-</span>',
 	'attributes'=>array(
-		array(
-			'name'=>'resellerid',
-			'value'=>$record->Reseller ? $record->Reseller->name : null
-		),
+		'name',
     'code',
+		'expirationTime',
+		'count',
+		'countperclient',
 		array(
 			'name'=>'active',
 			'value'=>$record->active ? g('Yes') : g('No')
 		),
-    array(
-			'name'=>'discount',
-			'value'=>$record->discount.' %'
-		),
   ),
 )); ?>
 <?php $this->widget('bootstrap.widgets.TbButton', array(
-	'label'=>g('Edit coupon'),
+	'label'=>g('Edit voucher'),
 	'type'=>'buttonLink',
 	'size'=>'small',
-	'url'=>$this->createUrl('admin/coupon',array('id'=>$record->primaryKey))
+	'url'=>$this->createUrl('admin/voucher',array('id'=>$record->primaryKey))
 )); ?>
 
-<h2><?php t('Payments'); ?></h2>
-<?php $this->widget('bootstrap.widgets.TbGridView',array(
+<h2><?php t('Walls'); ?></h2>
+<?php
+$wallModel = new Wall;
+$wallModel->showDeleted = true;
+$this->widget('bootstrap.widgets.TbGridView',array(
 	'type'=>'striped bordered condensed',
-	'dataProvider'=>new CActiveDataProvider('Payment',array('criteria'=>array(
-		'condition'=>'couponid=:couponid AND paid IS NOT NULL',
-		'params'=>array(':couponid'=>$record->primaryKey)
-	))),
+	'dataProvider'=>new CActiveDataProvider($wallModel,array(
+		'criteria'=>array(
+			'condition'=>'voucherid=:voucherid',
+			'params'=>array(':voucherid'=>$record->primaryKey)
+		),
+		'sort'=>array(
+			'defaultOrder'=>array(
+				'created'=>CSort::SORT_DESC,
+			)
+		),
+	)),
 	'columns'=>array(
-		array('name'=>'paymentid','header'=>'#'),
-		'code',
 		array(
-      'name'=>'paid',
-      'value'=>'date("j.n.Y H:i:s",$data->paid)'
-    ),
+			'name'=>'wallid',
+			'header'=>'#'
+		),
 		array(
-			'name'=>'total',
-			'footer'=>$record->paymentSum
+			'name'=>'name',
+			'cssClassExpression'=>'$data->deleted ? "deleted" : ""',
+		),
+		array(
+			'name'=>'created',
+			'value'=>'$data->creationDate',
+		),
+		array(
+			'name'=>'client',
+			'value'=>'$data->Client->email',
+			'filter'=>''
+		),
+		array(
+			'class'=>'bootstrap.widgets.TbButtonColumn',
+			'template'=>'{view}',
+			'viewButtonUrl'=>'Yii::app()->createUrl("admin/viewWall",array("id"=>$data->primaryKey))',
 		),
 	),
-)); ?>
+));
+$wallModel->showDeleted = false;
+?>

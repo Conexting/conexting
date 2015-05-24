@@ -1,4 +1,4 @@
-<h1><?php t('Purchase Premium-wall'); ?></h1>
+<h1><?php echo $this->pageTitle; ?></h1>
 <?php
 /* @var $form TbActiveForm */
 $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(

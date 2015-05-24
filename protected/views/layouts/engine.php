@@ -43,7 +43,7 @@ $this->cssFile('engine');
 				$firstOption = reset(Yii::app()->params['store']['walls']);
 				t('Premium-wall from {n} €.',$firstOption['price']);
 				?>
-				<?php t('See the <a href="{url}">features-page</a> for full list of features and pricing.',array('{url}'=>$this->createUrl('info/features'))); ?>
+				<?php t('See the <a href="{url}" target="_blank">features-page</a> for full list of features and pricing.',array('{url}'=>$this->createUrl('info/features'))); ?>
 			</p>
 		</div>
 		<div class="modal-footer">
