@@ -450,7 +450,7 @@ return array(
 	'Premium features'=>'Premium-ominaisuudet',
 	'SMS-messages and SMS-voting'=>'SMS-viestien vastaanotto ja SMS-äänestykset',
 	'No signing in required for Twitter'=>'Voit käyttää Twitter-hashtagia ilman Twitter-tunnuksia',
-	'See the <a href="{url}">features-page</a> for full list of features and pricing.'=>'Katso <a href="{url}">ominaisuudet-sivulta</a> kattava lista ominaisuuksista sekä hinnoittelusta.',
+	'See the <a href="{url}" target="_blank">features-page</a> for full list of features and pricing.'=>'Katso <a href="{url}" target="_blank">ominaisuudet-sivulta</a> kattava lista ominaisuuksista sekä hinnoittelusta.',
 	'Premium-wall from {n} €.'=>'Premium-keskusteluseinä alkaen {n} €.',
 	'These are Premium features.'=>'Nämä ovat Premium-ominaisuuksia.',
 	'You can try all these features for free.'=>'Voit kokeilla kaikkia ominaisuuksia ilmaiseksi.',

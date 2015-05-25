@@ -54,6 +54,7 @@ echo $form->errorSummary($wall);
 				} else {
 					$this->widget('bootstrap.widgets.TbButton',array('htmlOptions'=>array('name'=>'sign-in-twitter','class'=>'sign-in'),'buttonType'=>'submit','encodeLabel'=>false,'label'=>CHtml::image(Yii::app()->baseUrl.'/images/sign-in-with-twitter-gray.png','Sign in with Twitter')));
 				}
+				echo CHtml::activeHiddenField($wall,'twitteruser');
 				?>
 				</p>
 				<p>

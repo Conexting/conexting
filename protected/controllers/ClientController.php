@@ -122,9 +122,12 @@ class ClientController extends Controller {
 			$wall = new Wall();
 			$wall->clientid = Yii::app()->user->client->primaryKey;
 		}
-
+		
 		if( $_POST['Wall'] ) {
 			$wall->attributes = $_POST['Wall'];
+			if( $_POST['Wall']['twitteruser'] == Yii::app()->session['LoggedInTwitterUserId']) {
+				$wall->twitteruser = Yii::app()->session['LoggedInTwitterUserId'];
+			}
 			if( isset($_POST['sign-in-twitter']) ) {
 				Yii::app()->session['WallCache'] = $_POST['Wall'];
 				if( $wall->isNewRecord ) {
@@ -169,6 +172,7 @@ class ClientController extends Controller {
 		} else if( $retrieve ) {
 			$wall->attributes = Yii::app()->session['WallCache'];
 			$wall->twitteruser = Yii::app()->session['WallCache']['twitteruser'];
+			Yii::app()->session['LoggedInTwitterUserId'] = Yii::app()->session['WallCache']['twitteruser'];
 			Yii::app()->session['WallCache'] = null;
 		}
 		
