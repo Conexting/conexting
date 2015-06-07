@@ -153,6 +153,11 @@ class Controller extends CController {
 		return $this->getVersionedFileUrl($file,$theme,$imgUrl,$imgPath,$extension);
 	}
 	
+	public function imageFileAbsolute($file,$theme=false,$imgUrl='/images/',$imgPath='/images/',$extension='.png') {
+		return Yii::app()->getRequest()->getHostInfo()
+			.$this->getVersionedFileUrl($file,$theme,$imgUrl,$imgPath,$extension);
+	}
+	
 	protected function getVersionedFileUrl($file,$theme,$fileUrl,$filePath,$extension) {
 		if( $theme ) {
 			$url = Yii::app()->theme->baseUrl.$fileUrl.$file.$extension;

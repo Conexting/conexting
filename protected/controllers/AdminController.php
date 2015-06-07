@@ -254,6 +254,44 @@ class AdminController extends Controller {
 		return $this->viewRecord(Wall::model(),$id);
 	}
 	
+	public function actionWallNotify($id) {
+		$wall = Wall::model()->findByPk($id);
+		if( is_null($wall) ) {
+			return $this->redirect(array('admin/wall'));
+		}
+		
+		$notification = new NotificationTestForm;
+		$notification->to = Yii::app()->params['fromEmail'];
+		
+		$notifications = array(
+			'client/wallExpires' => 'Expires today',
+			'client/wallToBeRemoved' => 'About to be removed',
+			'client/wallUnpublishedToBeRemoved' => 'Unpublished, about to be removed',
+			'client/wallRemoved' => 'Removed'
+		);
+		
+		if( isset($_POST['NotificationTestForm']) ) {
+			$notification->attributes = $_POST['NotificationTestForm'];
+			if( $notification->validate() ) {
+				$defaultLanguage = Yii::app()->language;
+				if( $wall->Client->language ) {
+					Yii::app()->language = $wall->Client->language;
+				} else {
+					Yii::app()->language = $defaultLanguage;
+				}
+				
+				if( $this->sendMail($notification->to,$notification->notification,$notifications[$notification->notification],array('wall'=>$wall,'client',$wall->Client)) ) {
+					f(g('Notification sent'));
+					return $this->refresh();
+				} else {
+					f(g('Error sending notification'),'error');
+				}
+			}
+		}
+		
+		return $this->render('wallNotify',compact('wall','notification','notifications'));
+	}
+	
 	public function filterAdminCheck($filterChain) {
 		if( $this->isAdmin() ) {
 			return $filterChain->run();
@@ -295,5 +333,15 @@ class AdminController extends Controller {
 	
 	protected function navBarItems(&$items) {
 		
+	}
+	
+	private function sendMail($to,$view,$subject,$params=array()) {
+		$mail = new MailMessage;
+		$mail->subject = $subject;
+		$mail->view = $view;
+		$mail->setBody(array_merge($params));
+		$mail->setTo(array($to));
+		$mail->from = Yii::app()->params['fromEmail'];
+		return Yii::app()->mail->send($mail);
 	}
 }

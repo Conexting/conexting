@@ -346,6 +346,7 @@ class Twitter extends CApplicationComponent {
 	protected function TwError($twitter,$response,$msg='',$level=CLogger::LEVEL_ERROR) {
 		$msg .= PHP_EOL.'Url: '.$twitter->url;
 		$msg .= PHP_EOL.'Status code: '.$twitter->http_code;
+		$msg .= PHP_EOL.'Status info: '.print_r($twitter->http_info,true);
 		$msg .= PHP_EOL.print_r($response,true);
 		Yii::log($msg,$level);
 	}

@@ -114,17 +114,17 @@ return array(
 	 */
 	'notifyBeforeWallDiesDays'=>3,
 	/**
-	 * Minimum wall lifetime (from publishing to expiring) in days to send
+	 * Minimum wall lifetime (from created to dies) in days to send
 	 * the notification before removal. If wall lifetime is less than this, no
 	 * notification will be sent. (Note: when the wall is removed the
 	 * notification is always sent.)
 	 */
-	'notifyBeforeWallDiesMinLifetime'=>5,
+	'notifyBeforeWallDiesMinLifetime'=>14,
 	/**
-	 * Minimum wall lifetime in days to send notification when the wall is
-	 * expiring within the day.
+	 * Minimum wall using time (from published to expires) in days to send
+	 * notification when the wall is expiring within the day.
 	 */
-	'notifyWhenWallExpiresMinLifetime'=>3,
+	'notifyWhenWallExpiresMinUsetime'=>3,
 	/**
 	 * Number of days before a notification is sent about unpublished wall
 	 * being removed. (Note: unpublished walls have no lifetime so above

@@ -19,8 +19,8 @@ class MaintainCommand extends ConsoleCommand {
 	}
 	
 	public function actionNotifyBeforeWallDies() {
-		// Notify walls that are going to be removed in X days (limiting to those that have been usable for at least X days)
-		$wallsToNotify = Wall::model()->findAll('deleted IS NULL AND published IS NOT NULL AND DATEDIFF(NOW(),dies) = :daystoremove AND DATEDIFF(published,expires) > :lifetime',array(
+		// Notify walls that are going to be removed in X days (limiting to those that have existed for at least X days)
+		$wallsToNotify = Wall::model()->findAll('deleted IS NULL AND published IS NOT NULL AND DATEDIFF(dies,NOW()) = :daystoremove AND DATEDIFF(dies,created) >= :lifetime',array(
 			':daystoremove'=>Yii::app()->params['cnxConfig']['notifyBeforeWallDiesDays'],
 			':lifetime'=>Yii::app()->params['cnxConfig']['notifyBeforeWallDiesMinLifetime'],
 		));
@@ -29,15 +29,15 @@ class MaintainCommand extends ConsoleCommand {
 	
 	public function actionNotifyWhenWallExpires() {
 		// Notify walls that are expiring today (limiting to those that have been usable for at least X days)
-		$wallsToNotify = Wall::model()->findAll('deleted IS NULL AND DATE(expires) = :date AND DATEDIFF(published,expires) > :lifetime',array(
-			':lifetime'=>date('Y-m-d',Yii::app()->params['cnxConfig']['notifyWhenWallExpiresMinLifetime'])
+		$wallsToNotify = Wall::model()->findAll('deleted IS NULL AND DATE(expires) = DATE(NOW()) AND DATEDIFF(expires,published) >= :usetime',array(
+			':usetime'=>Yii::app()->params['cnxConfig']['notifyWhenWallExpiresMinUsetime']
 		));
 		$this->notifyWalls($wallsToNotify,'client/wallExpires','Conexting wall {name} expires today');
 	}
 	
 	public function actionNotifyUnpublishedWallRemoved() {
 		// Notify unpublished walls that are going to be removed in X days
-		$wallsToNotify = Wall::model()->findAll('deleted IS NULL AND published IS NULL AND DATEDIFF(NOW(),dies) = :daystoremove',array(
+		$wallsToNotify = Wall::model()->findAll('deleted IS NULL AND published IS NULL AND DATEDIFF(dies,NOW()) = :daystoremove',array(
 			':daystoremove'=>Yii::app()->params['cnxConfig']['notifyUnpublishedWallRemovedDays'],
 		));
 		$this->notifyWalls($wallsToNotify,'client/wallUnpublishedToBeRemoved','Conexting wall {name} is about to be removed');
