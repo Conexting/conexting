@@ -21,6 +21,7 @@ echo $form->errorSummary(array_merge(array($poll),$choices));
 	?>
 	<?php echo $form->checkBoxRow($poll,'allowChoices',array('hint'=>g('Voters can vote for any number of given choices.'))); ?>
 	<?php echo $form->checkBoxRow($poll,'allowVotes',array('hint'=>g('Voters can vote a choice multiple times.'))); ?>
+  <?php echo $form->checkBoxRow($poll,'closed',array('hint'=>g('If the voting is closed, no more votes are accepted.'))); ?>
 </fieldset>
 <fieldset>
 	<legend><?php t('Choices'); ?></legend>

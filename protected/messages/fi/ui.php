@@ -467,4 +467,7 @@ return array(
 	'Event interaction with pre-event and post-event engagement: strategic development days, staff and client events in multi-site organizations, seminars.'=>'Ennakkotehtävän, tilaisuuden ja palautekyselyn järjestäminen: strategian kehittämispäivät, monipiste-organisaation henkilöstö- tai asiakastapahtuma, sitouttava seminaari.',
 	'Already have an account?'=>'Onko sinulla jo tili?',
 	'This is a {premium}-feature.'=>'Tämä on {premium}-ominaisuus',
+  'Voting is closed'=>'Äänestys on suljettu',
+  'If the voting is closed, no more votes are accepted.'=>'Kun äänestys on suljettu, ääniä ei oteta enää vastaan.',
+  'This poll has been closed, no more votes are accepted.'=>'Tämä äänestys on sulkeutunut, ääniä ei enää oteta vastaan.',
 );

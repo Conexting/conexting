@@ -463,6 +463,10 @@ class WallController extends Controller {
 					if( $this->wall->isExpired ) {
 						break;
 					}
+          
+          if( $poll->closed ) {
+            break;
+          }
 					
 					$transaction = Yii::app()->db->beginTransaction();
 					

@@ -32,7 +32,7 @@ class Poll extends DeletableActiveRecord {
 				'condition'=>'wallid=:wallid',
 				'params'=>array(':wallid'=>$this->wallid))
 			),
-			array('smsdefault,allowChoices,allowVotes','boolean'),
+			array('smsdefault,allowChoices,allowVotes,closed','boolean'),
 			array('smsdefault','uniqueSmsDefault','criteria'=>array('condition'=>'smsdefault=TRUE'),'message'=>g('There is already a default poll set for this wall.')),
 			array('clearVotes','boolean'),
 		);
@@ -55,6 +55,7 @@ class Poll extends DeletableActiveRecord {
 			'clearVotes'=>g('Clear all votes'),
 			'allowChoices'=>g('Allow multiple choices'),
 			'allowVotes'=>g('Allow multiple votes'),
+      'closed'=>g('Voting is closed'),
 		);
 	}
 	

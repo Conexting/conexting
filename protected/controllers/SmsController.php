@@ -162,6 +162,11 @@ class SmsController extends Controller {
 				}
 				$successFunction($successMsg);
 			} else {
+        // Check if the voting has been closed
+        if( $poll->closed ) {
+          return $errorFunction(g('This poll has been closed, no more votes are accepted.'));
+        }
+        
 				$senderhash = sha1('cnxsender_sms_'.$sms->source);
 				$replyParams = array('{char}'=>$choice->char,'{choice}'=>$choice->text);
 				if( $poll->limitchoices && $poll->hasOtherVotes($senderhash,$choice->choice) ) {
