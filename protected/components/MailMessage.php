@@ -11,7 +11,7 @@ class MailMessage extends YiiMailMessage {
 			if( isset(Yii::app()->controller) ) {
 				$controller = Yii::app()->controller;
 			} else {
-				$controller = new CController('YiiMail');
+				$controller = new Controller('YiiMail');
 			}
 			
 			list($utm_source,$utm_campaign) = explode('/',$this->view,2);

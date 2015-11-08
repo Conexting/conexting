@@ -31,7 +31,7 @@
 			</tr>
 			<tr>
 				<td></td>
-				<td><?php echo CHtml::link(CHtml::image(Yii::app()->controller->imageFileAbsolute('conexting_small'),'Conexting',array('style'=>'border: 0;')),Yii::app()->createAbsoluteUrl('site/index',array('utm_medium'=>'email','utm_source'=>$utm_source,'utm_campaign'=>$utm_campaign,'utm_content'=>'bottomLogo'))); ?></td>
+				<td><?php echo CHtml::link(CHtml::image($this->imageFileAbsolute('conexting_small'),'Conexting',array('style'=>'border: 0;')),Yii::app()->createAbsoluteUrl('site/index',array('utm_medium'=>'email','utm_source'=>$utm_source,'utm_campaign'=>$utm_campaign,'utm_content'=>'bottomLogo'))); ?></td>
 				<td></td>
 			</tr>
 			<tr height="15px">

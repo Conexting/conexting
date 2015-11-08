@@ -7,7 +7,7 @@ class MaintainCommand extends ConsoleCommand {
 		if( !empty($wallsToRemove) ) {
 			echo 'Preparing to remove '.count($wallsToRemove).' dead walls'.PHP_EOL;
 			foreach( $wallsToRemove as $wall ) {
-				echo 'Removing wall "'.$wall->name.'"... ';
+				echo 'Removing wall "'.$wall->name.'" (dies '.$wall->dyingTime.')... ';
 				$wall->delete();
 				echo 'OK'.PHP_EOL;
 				$removedCount++;
