@@ -1,6 +1,7 @@
 <h3><?php t('Wall views'); ?></h3>
 <ul>
 	<li><?php echo CHtml::link(g('Screen view'),$this->createUrl($this->id.'/view')); ?> - <?php t('Large screen optimized view to show messages and votes. You can use browser\'s full screen option (keyboard shortcut F11) and zoom as necessary.'); ?></li>
+	<li><?php echo CHtml::link(g('Wall visualization'),$this->createUrl($this->id.'/visualize')); ?> (beta) - <?php t('Show a visualization the message feed'); ?></li>
 </ul>
 
 <?php if( $this->wall->premoderated ) { ?>

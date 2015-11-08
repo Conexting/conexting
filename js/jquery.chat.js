@@ -89,7 +89,7 @@
 					var parentMessage = $(this).closest('.message');
 					if( parentMessage.length > 0 ) {
 						// Sender account mention is required when replying using twitter
-						mentionLength = parentMessage.children('.sender-account').text().length + 2;
+						mentionLength = parentMessage.find('>p .sender-account').text().length + 2;
 					}
 					var messageLength = $(this).val().length;
 					var usernameLength = $('.my_username',chat).text().length;
@@ -142,7 +142,7 @@
 					chat.on('click','.admin-delete-message',function(){
 						var message = $(this).closest('.message');
 						var messageid = message.data('id');
-						var teksti = message.children('.message-content').text();
+						var teksti = message.find('>p .message-content').text();
 						var viesti = '"'+teksti+'"\n\n'+settings.strings.admin.confirmRemoveMessage;
 						if( !confirm(viesti) ) {
 							return false;
@@ -385,6 +385,7 @@
 			}
 			
 			chat.chat('insertMessageElement',newMessage,parentFeed);
+			feed.trigger('jquerychat.messageInserted', [ message.messageid ]);
 			
 			// Mark admin-messages
 			if( message.adminmessage ) {
@@ -399,7 +400,7 @@
 				highlightDate = new Date(message.timestamp*1000);
 			}
 			
-			if( highlightDate > settings.highlightNewAfter ) {
+			if( settings.highlightNewAfter && highlightDate > settings.highlightNewAfter ) {
 				var originalBg = newMessage.css('backgroundColor');
 				newMessage.css('backgroundColor',settings.highlightBackgroundColor).animate({backgroundColor:originalBg},settings.highlightNewDuration,'easeOutQuint');
 			}
@@ -457,6 +458,7 @@
 					});
 					$.each(data.deleted,function(key,messageid){
 						$('#message_'+messageid,chat).remove();
+						feed.trigger('jquerychat.messageDeleted', [ messageid ]);
 					});
 					chat.chat('pinMessages',data.pinned);
 					$('abbr.timeago').timeago();
@@ -636,8 +638,6 @@
 					parent.append(newMessage);
 				}
 			}
-			
-			feed.trigger('jquerychat.messageInserted');
 		},
 		changeUsername: function(){
 			var chat = this;

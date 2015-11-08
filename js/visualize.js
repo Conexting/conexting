@@ -1,31 +1,37 @@
 $(function(){
+	var waitOnMessage = 7000; // How long to show one message before moving to next
+	
 	var messageWindow = $('.feed');
 	var currentMessage = $('.parent.message:first',messageWindow).addClass('selected',500);
-	var startVisualization = function(){
+	var newMessages = [];
+	
+	var selectNextMessage = function(){
 		if( currentMessage.length > 0 ) {
 			currentMessage.removeClass('selected',500);
-			currentMessage = currentMessage.next('.parent.message');
-			if( currentMessage.length === 0 ) {
-				currentMessage = $('.parent.message:first',messageWindow);
-			}
-			currentMessage.addClass('selected',500,function(){
-				messageWindow.scrollTo(currentMessage,500);
-			});
+		}
+		
+		if( newMessages.length > 0 ) {
+			// Select most recently added message
+			currentMessage = $('#message_' + newMessages.pop());
 		} else {
-			currentMessage = $('.parent.message:first',messageWindow).addClass('selected',500);
+			// Select next message
+			currentMessage = currentMessage.next('.parent.message');
 		}
+		
+		if( currentMessage.length === 0 ) {
+			// Select first message
+			currentMessage = $('.parent.message:first',messageWindow);
+		}
+
+		currentMessage.stop(true,true).addClass('selected',500,function(){
+			messageWindow.scrollTo(currentMessage,500);
+		});
 	};
-	messageWindow.on('jquerychat.messageInserted',function(){
-		if( currentMessage.length > 0 ) {
-			messageWindow.scrollTo(currentMessage,0);
-		}
-	});
 	
-	var messageScroller = window.setInterval(startVisualization,4000);
+	var messageScroller = window.setInterval(selectNextMessage,waitOnMessage);
 	
 	$('.pause-visualization').each(function(){
 		var pauseButton = $(this);
-		var menu = pauseButton.closest('.navbar');
 		pauseButton.tooltip({
 			title: pauseButton.attr('data-title-pause'),
 			placement: 'bottom'
@@ -43,7 +49,7 @@ $(function(){
 					placement: 'bottom'
 				});
 			} else {
-				messageScroller = window.setInterval(startVisualization,4000);
+				messageScroller = window.setInterval(selectNextMessage,waitOnMessage);
 				pauseButton.attr('title',pauseButton.attr('data-title-pause'))
 					.find('i').removeClass('fa-pause').addClass('fa-pause');
 				pauseButton.tooltip({
@@ -52,5 +58,20 @@ $(function(){
 				});
 			}
 		});
+	});
+	
+	// Handle added and removed messages
+	messageWindow.on('jquerychat.messageInserted',function(event, messageid){
+		newMessages.push(messageid);
+		// If message was added to above, need to adjust scroll
+		if(currentMessage.length > 0 ) {
+			messageWindow.scrollTo(currentMessage);
+		}
+	});
+	messageWindow.on('jquerychat.messageDeleted',function(event, messageid){
+		// If message was removed from above, need to adjust scroll
+		if(currentMessage.length > 0 ) {
+			messageWindow.scrollTo(currentMessage);
+		}
 	});
 });

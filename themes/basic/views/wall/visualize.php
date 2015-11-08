@@ -25,6 +25,7 @@ $this->widget('ChatView',array(
 		'refreshRate'=>$this->wall->premium ? 10 : 20,
 		'allowReply'=>false,
 		'threaded'=>false,
+		'highlightNewAfter'=>false,
 		'showUserImages'=>(bool)$this->wall->themeModel->showUserImages,
 		'showTimestamps'=>(bool)$this->wall->themeModel->showTimestamps,
 	),

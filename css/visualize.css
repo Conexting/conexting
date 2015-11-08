@@ -15,6 +15,8 @@ body #container .chat .show-more {
 }
 body #container .chat .feed {
   height: 50vh;
+  padding-left: 5px;
+  padding-right: 5px;
   overflow: hidden;
   text-align: center;
 }
@@ -25,6 +27,8 @@ body #container .chat .feed .message.parent:last-child {
   margin-bottom: 50vh;
 }
 body #container .chat .pinnedFeed {
+  padding-left: 5px;
+  padding-right: 5px;
   text-align: center;
 }
 body #container .chat .pinnedFeed .message {
@@ -47,5 +51,8 @@ body #container .chat .message.selected,
 body #container .chat .message.pinned {
   font-size: 1.5em;
   line-height: 110%;
+  padding: 15px;
+  background-color: #fafff6;
+  box-shadow: 2px 1px 3px 0px #ccc;
 }
 /*# sourceMappingURL=visualize.css.map */
